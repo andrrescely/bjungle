@@ -1,0 +1,74 @@
+<mat-toolbar color="primary">
+    <mat-icon>library_books</mat-icon>
+    <span mat-toolbar-title class="custom-title"> La libreria</span>
+</mat-toolbar>
+
+<div class="toolbar-container">
+    <mat-form-field appearance="fill" flex-grow>
+        <mat-label><mat-icon>search</mat-icon>Busca un libro.</mat-label>
+        <input matInput [(ngModel)]="filter" (input)="filterBooks()"
+            placeholder="Busca un libro por Nombre, Url o Fecha de actualizacion">
+    </mat-form-field>
+    <mat-form-field appearance="fill" flex-grow>
+        <mat-label>	<mat-icon>star</mat-icon>Buscar por cantidad</mat-label>
+        <input matInput type="number" [(ngModel)]="numberBooks" (input)="getBooksNumber()"
+            placeholder="Cantidad de libros">
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="viewAll()" class="marginButton">Ver todos</button>
+</div>
+
+@if(filter){
+<div class="example-card-container">
+    <mat-card *ngFor="let bookFilter of booksFilter; let i = index" class="example-card">
+        <mat-card-header class="colorTitle">
+            <mat-card-title class="colorTextTitle">{{ bookFilter.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <img [src]="getImageUrl(i)" alt="Imagen del libro" class="marginImage">
+            <p><strong>URL: </strong>{{ bookFilter.url }}</p>
+            <p><strong>Seed Count: </strong> {{ bookFilter.seed_count }}</p>
+            <p><strong>Last Update: </strong>{{ bookFilter.last_update }}</p>
+        </mat-card-content>
+        <div class="button-container"> 
+            <button mat-raised-button color="accent" class="small-button">Leer libro</button> 
+        </div>
+    </mat-card>
+</div>
+}
+@if(!filter && numberBooks!=0){
+<div class="example-card-container">
+    <mat-card *ngFor="let book of booksNumber?.docs; let i = index" class="example-card">
+        <mat-card-header class="colorTitle">
+            <mat-card-title class="colorTextTitle">{{ book.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <img [src]="getImageUrl(i)" alt="Imagen del libro" class="marginImage">
+            <p><strong>URL: </strong>{{ book.url }}</p>
+            <p><strong>Seed Count:</strong> {{ book.seed_count }}</p>
+            <p><strong>Last Update:</strong> {{ book.last_update }}</p>
+        </mat-card-content>
+        <div class="button-container"> 
+            <button mat-raised-button color="accent" class="small-button">Leer libro</button> 
+        </div>
+    </mat-card>
+</div>
+}
+
+@if(!filter && numberBooks==0){
+<div class="example-card-container">
+    <mat-card *ngFor="let book of books?.docs; let i = index" class="example-card">
+        <mat-card-header class="colorTitle">
+            <mat-card-title class="colorTextTitle">{{ book.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <img [src]="getImageUrl(i)" alt="Imagen del libro" class="marginImage">
+            <p><strong>URL:</strong> {{ book.url }}</p>
+            <p><strong>Seed Count:</strong> {{ book.seed_count }}</p>
+            <p><strong>Last Update:</strong> {{ book.last_update }}</p>
+        </mat-card-content>
+        <div class="button-container"> 
+            <button mat-raised-button color="accent" class="small-button">Leer libro</button> 
+        </div>
+    </mat-card>
+</div>
+}
